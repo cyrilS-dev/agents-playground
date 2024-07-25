@@ -7,15 +7,9 @@ import { AudioInputTile } from "@/components/config/AudioInputTile";
 import { ConfigurationPanelItem } from "@/components/config/ConfigurationPanelItem";
 import { NameValueRow } from "@/components/config/NameValueRow";
 import { PlaygroundHeader } from "@/components/playground/PlaygroundHeader";
-import {
-  PlaygroundTab,
-  PlaygroundTabbedTile,
-  PlaygroundTile,
-} from "@/components/playground/PlaygroundTile";
-import { AgentMultibandAudioVisualizer } from "@/components/visualization/AgentMultibandAudioVisualizer";
 import { AgentMultibandAudioWaveVisualizer } from "@/components/visualization/AgentMultibandAudioWaveVisualizer";
 import { useConfig } from "@/hooks/useConfig";
-import { useAudiobandTrackVolume, useMultibandTrackVolume } from "@/hooks/useTrackVolume";
+import {  useMultibandTrackVolume } from "@/hooks/useTrackVolume";
 import { TranscriptionTile } from "@/transcriptions/TranscriptionTile";
 import {
   TrackReferenceOrPlaceholder,
@@ -118,14 +112,6 @@ export default function Playground({
     20
   );
 
-  // const subscribedAudioVolumes = useAudiobandTrackVolume(
-  //   agentAudioTrack?.publication?.track
-  // );
-
-  // const localMultibandAudioVolume = useAudiobandTrackVolume(
-  //   localMicTrack?.publication.track
-  // );
-
   const onDataReceived = useCallback(
     (msg: any) => {
       if (msg.topic === "transcription") {
@@ -193,13 +179,13 @@ export default function Playground({
 
   const audioTileContent = useMemo(() => {
     const disconnectedContent = (
-      <div className="flex flex-col items-center justify-center gap-2 text-gray-700 text-center w-full">
+      <div className="flex flex-col items-center justify-center gap-2 text-white text-center w-full">
         Connect to begin the enchantment
       </div>
     );
 
     const waitingContent = (
-      <div className="flex flex-col items-center gap-2 text-gray-700 text-center w-full">
+      <div className="flex flex-col items-center justify-center gap-2 text-white text-center w-full">
         <LoadingSVG />
         Loading magic...
       </div>
@@ -208,17 +194,6 @@ export default function Playground({
     // TODO: keep it in the speaking state until we come up with a better protocol for agent states
     const visualizerContent = (
       <div className="flex items-center justify-center w-full">
-        {/* <AgentMultibandAudioVisualizer
-          state="speaking"
-          barWidth={30}
-          minBarHeight={30}
-          maxBarHeight={150}
-          accentColor={config.settings.theme_color}
-          accentShade={500}
-          frequencies={subscribedVolumes}
-          borderRadius={12}
-          gap={16}
-        /> */}
         <AgentMultibandAudioWaveVisualizer
           state="speaking"
           barWidth={30}
@@ -226,7 +201,6 @@ export default function Playground({
           maxBarHeight={150}
           accentColor={config.settings.theme_color}
           accentShade={500}
-          // localMicTrack = {localMicTrack?.publication?.track}
           localMicTrack = {agentAudioTrack?.publication?.track}
           borderRadius={12}
           gap={16}
@@ -398,18 +372,7 @@ export default function Playground({
         className={`flex gap-4 py-4 grow w-full selection:bg-${config.settings.theme_color}-900`}
         style={{ height: `calc(100% - ${headerHeight}px)` }}
       >
-        
-        
-          
-          {config.settings.outputs.audio && (
-            <PlaygroundTile
-              title="Audio"
-              className="w-full h-full grow"
-              childrenClassName="justify-center"
-            >
               {audioTileContent}
-            </PlaygroundTile>
-          )}
         </div>
      
     </>
