@@ -76,15 +76,6 @@ export default function Playground({
     }
   }, [config, localParticipant, roomState]);
 
-  const [isLg, setIsLg] = useState<boolean>(true)
-  const handleWindowSizeChange = () => {
-    setIsLg(window.innerWidth >= 1024)
-  }
-  useEffect(() => {
-    window.addEventListener('resize', handleWindowSizeChange)
-    return () => window.removeEventListener('resize', handleWindowSizeChange)
-  }, [])
-
   let agentAudioTrack: TrackReferenceOrPlaceholder | undefined;
   const aat = tracks.find(
     (trackRef) =>
@@ -390,56 +381,6 @@ export default function Playground({
     setUserSettings,
   ]);
 
-  let mobileTabs: PlaygroundTab[] = [];
-  if (config.settings.outputs.video) {
-    mobileTabs.push({
-      title: "Video",
-      content: (
-        <PlaygroundTile
-          className="w-full h-full grow"
-          childrenClassName="justify-center"
-        >
-          {videoTileContent}
-        </PlaygroundTile>
-      ),
-    });
-  }
-
-  if (config.settings.outputs.audio) {
-    mobileTabs.push({
-      title: "Audio",
-      content: (
-        <PlaygroundTile
-          className="w-full h-full grow"
-          childrenClassName="justify-center"
-        >
-          {audioTileContent}
-        </PlaygroundTile>
-      ),
-    });
-  }
-
-  if (config.settings.chat) {
-    mobileTabs.push({
-      title: "Chat",
-      content: chatTileContent,
-    });
-  }
-
-  mobileTabs.push({
-    title: "Settings",
-    content: (
-      <PlaygroundTile
-        padding={false}
-        backgroundColor="gray-950"
-        className="h-full w-full basis-1/4 items-start overflow-y-auto flex"
-        childrenClassName="h-full grow items-start"
-      >
-        {settingsTileContent}
-      </PlaygroundTile>
-    ),
-  });
-
   return (
     <>
       <PlaygroundHeader
@@ -457,31 +398,9 @@ export default function Playground({
         className={`flex gap-4 py-4 grow w-full selection:bg-${config.settings.theme_color}-900`}
         style={{ height: `calc(100% - ${headerHeight}px)` }}
       >
-        {!isLg ?
-        <div className="flex flex-col grow basis-1/2 gap-4 h-full lg:hidden">
-          <PlaygroundTabbedTile
-            className="h-full"
-            tabs={mobileTabs}
-            initialTab={0}
-          />
-        </div>
-        : 
-        <div
-          className={`flex-col grow basis-1/2 gap-4 h-full hidden lg:${
-            !config.settings.outputs.audio && !config.settings.outputs.video
-              ? "hidden"
-              : "flex"
-          }`}
-        >
-          {config.settings.outputs.video && (
-            <PlaygroundTile
-              title="Video"
-              className="w-full h-full grow"
-              childrenClassName="justify-center"
-            >
-              {videoTileContent}
-            </PlaygroundTile>
-          )}
+        
+        
+          
           {config.settings.outputs.audio && (
             <PlaygroundTile
               title="Audio"
@@ -492,24 +411,7 @@ export default function Playground({
             </PlaygroundTile>
           )}
         </div>
-         }
-        {config.settings.chat && (
-          <PlaygroundTile
-            title="Chat"
-            className="h-full grow basis-1/4 hidden lg:flex"
-          >
-            {chatTileContent}
-          </PlaygroundTile>
-        )}
-        <PlaygroundTile
-          padding={false}
-          backgroundColor="gray-950"
-          className="h-full w-full basis-1/4 items-start overflow-y-auto hidden max-w-[480px] lg:flex"
-          childrenClassName="h-full grow items-start"
-        >
-          {settingsTileContent}
-        </PlaygroundTile>
-      </div>
+     
     </>
   );
 }

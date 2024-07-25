@@ -35,7 +35,7 @@ export const PlaygroundTile: React.FC<PlaygroundTileProps> = ({
       className={`flex ${className}`}
     >
       <div
-        className={`flex flex-col items-center grow w-full ${childrenClassName}`}
+        className={`flex flex-col items-center grow w-full`}
         style={{
           height: `calc(100% - ${title ? titleHeight + "px" : "0px"})`,
           padding: `${contentPadding * 4}px`,
