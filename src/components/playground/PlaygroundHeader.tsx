@@ -4,6 +4,8 @@ import { SettingsDropdown } from "@/components/playground/SettingsDropdown";
 import { useConfig } from "@/hooks/useConfig";
 import { ConnectionState } from "livekit-client";
 import { ReactNode } from "react";
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+
 
 type PlaygroundHeader = {
   logo?: ReactNode;
@@ -56,6 +58,18 @@ export const PlaygroundHeader = ({
             "Connect"
           )}
         </Button>
+        <ClerkProvider>
+          <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="rounded border border-gray-400 px-3 py-0.5">
+                    Sign in
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+        </ClerkProvider>
       </div>
     </div>
   );
