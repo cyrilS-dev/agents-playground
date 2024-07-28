@@ -58,7 +58,7 @@ export const PlaygroundHeader = ({
             "Connect"
           )}
         </Button>
-        <ClerkProvider>
+        <ClerkProvider publishableKey={'pk_live_Y2xlcmsudm9pY2VyLmFpJA'}>
           <SignedOut>
                 <SignInButton mode="modal">
                   <button className="rounded border border-gray-400 px-3 py-0.5">
