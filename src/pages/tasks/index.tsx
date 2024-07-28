@@ -88,8 +88,11 @@ export default function Home() {
       {loading && <p>Loading...</p>}
 
       {!loading &&
-        tasks.length > 0 &&
-        tasks.map((task: any) => <p>{task.name}</p>)}
+  tasks.length > 0 &&
+  tasks.map((task: any, index: number) => (
+    <p key={task.id || index}>{task.name}</p>
+  ))
+}
 
       {!loading && tasks.length === 0 && <p>No tasks found</p>}
 
