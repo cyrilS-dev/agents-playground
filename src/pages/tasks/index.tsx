@@ -4,6 +4,7 @@ import { useSession, useUser } from '@clerk/nextjs';
 import { createClient } from '@supabase/supabase-js';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
+
 export default function Home() {
   const [tasks, setTasks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
