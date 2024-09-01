@@ -5,6 +5,8 @@ import { AccessToken } from "livekit-server-sdk";
 import type { AccessTokenOptions, VideoGrant } from "livekit-server-sdk";
 import { TokenResult } from "../../lib/types";
 
+import { getAuth } from '@clerk/nextjs/server';
+
 const apiKey = process.env.LIVEKIT_API_KEY;
 const apiSecret = process.env.LIVEKIT_API_SECRET;
 
@@ -25,8 +27,13 @@ export default async function handleToken(
       return;
     }
 
+    const { userId } = getAuth(req);
+    if (!userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
     const roomName = `room-${generateRandomAlphanumeric(4)}-${generateRandomAlphanumeric(4)}`;
-    const identity = `identity-${generateRandomAlphanumeric(4)}`
+    const identity = `identity-${userId}`
 
     const grant: VideoGrant = {
       room: roomName,
